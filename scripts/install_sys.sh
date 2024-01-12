@@ -22,6 +22,7 @@ apt-get install $APT_OPT \
   wget \
   gnupg \
   unzip \
+  #mariadb-client \
   >> $LOG_FILE 2>&1
 
 echo "=> [2]: Server configuration"

@@ -27,6 +27,7 @@ apt-get install $APT_OPT \
   php-xsl \
   php-zip \
   php-mbstring \
+  mariadb-client \
   >> $LOG_FILE 2>&1
 
 echo "=> [2]: Apache2 configuration"
