@@ -32,9 +32,10 @@ Vagrant.configure("2") do |config|
     SHELL
     machine.vm.provision "shell", path: "scripts/install_sys.sh"
     machine.vm.provision "shell", path: "scripts/install_web.sh"
+    machine.vm.provision "shell", path: "scripts/documentRoot_proxy.sh"
     #machine.vm.provision "shell", path: "scripts/install_bdd.sh"
     #machine.vm.provision "shell", path: "scripts/install_moodle.sh"
-    #machine.vm.provision "shell", path: "scripts/install_myadmin.sh"
+    machine.vm.provision "shell", path: "scripts/install_myadmin.sh"
   end
 #Deuxieme machine virtuelle pour la base de donnees
   config.vm.define "srv-database" do |machinebdd|
@@ -85,6 +86,34 @@ Vagrant.configure("2") do |config|
     #machinebackup.vm.provision "shell", path: "scripts/install_bdd.sh"
     machinebackup.vm.provision "shell", path: "scripts/backup.sh"
    
+  end
+
+  #Quatrieme machine pour le sever reverse proxy
+  config.vm.define "srv-reverseproxy" do |machinereversep|
+    machinereversep.vm.hostname = "srv-dreverseproxy"
+    machinereversep.vm.box = "chavinje/fr-bull-64"
+    machinereversep.vm.network :private_network, ip: "192.168.56.83"
+
+    machinereversep.vm.provider :virtualbox do |vrp|
+      vrp.customize ["modifyvm", :id, "--name", "srv-reverseproxy"]
+      vrp.customize ["modifyvm", :id, "--groups", "/S7-projet"]
+      vrp.customize ["modifyvm", :id, "--cpus", "1"]
+      vrp.customize ["modifyvm", :id, "--memory", 1024]
+      vrp.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
+      vrp.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
+    end   
+    config.vm.provision "shell", inline: <<-SHELL
+      sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config    
+      sleep 3
+      service ssh restart
+    SHELL
+    machinereversep.vm.provision "shell", path: "scripts/install_sys.sh"
+    machinereversep.vm.provision "shell", path: "scripts/reverseproxy.sh"
+    machinereversep.vm.provision "shell", path: "scripts/install_web.sh"
+    machinereversep.vm.provision "shell", path: "scripts/creation_keys.sh"
+    machinereversep.vm.provision "shell", path: "scripts/ssl_configuration.sh"
+  
+    
   end
 
 end

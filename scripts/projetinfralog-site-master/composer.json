@@ -1,0 +1,8 @@
+{
+    "require": {
+        "smarty/smarty": "^4.3",
+        "almasaeed2010/adminlte": "^3.2",
+        "catfan/medoo": "^2.1",
+        "datatables.net/editor-php": "^2.2"
+    }
+}

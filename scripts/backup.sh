@@ -15,22 +15,16 @@ DBHOST="192.168.56.81"
 DEBIAN_FRONTEND=noninteractive
 
 BACKUP_DIR="/vagrant/backupBDD/"
-TIME=$(date + "%H-%M-%S")
+TIME=$(date +"%H-%M-%S")
 
-#NAME_FINAL="donnees - $(date + \%H:%M:%S).sql";
-
-#CHEMIN_FINAL= $BACKUP_DIR$NAME_FINAL;
+# Utilisation de guillemets pour éviter des problèmes avec les espaces dans les noms de fichiers
 NAME_FINAL="donnees - $TIME.sql"
 CHEMIN_FINAL="$BACKUP_DIR$NAME_FINAL"
 
-#if [ -f $CHEMIN_FINAL ]; then
-
-#mysqldump -h $DBHOST -u $DBUSER -p$DBPASSWD $DBNAME > $CHEMIN_FINAL;
-
+# Sauvegarde avec mysqldump
 mysqldump -h $DBHOST -u $DBUSER -p$DBPASSWD $DBNAME > "$CHEMIN_FINAL"
 
-#fi
-
+#Installation de mariaDB    
 echo "START - install MAriaDB - "$IP
 
 echo "=> Install required packages ..."

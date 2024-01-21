@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "datatables.net": "^1.13.8",
+    "datatables.net-datetime": "^1.5.0"
+  }
+}

@@ -28,10 +28,10 @@ apt-get install $APT_OPT \
   php-zip \
   php-mbstring \
   mariadb-client \
+  git \
   >> $LOG_FILE 2>&1
 
 echo "=> [2]: Apache2 configuration"
 	# Add configuration of /etc/apache2
 
 echo "END - install web Server"
-
