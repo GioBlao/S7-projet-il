@@ -8,11 +8,11 @@ LOG_FILE="/vagrant/logs/install_bdd.log"
 DEBIAN_FRONTEND="noninteractive" 
 
 #Utilisateur a créer (si un vide alors pas de création)
-DBNAME="moodle"
+DBNAME="Basket"
 DBUSER="moodle_user"
 DBPASSWD="network"
 #Fichier sql à injecter (présent dans un sous répertoire)
-DBFILE="files/creation_bdd.sql"
+DBFILE="files/infralogiciel.sql"
 
 echo "START - install MariaDB - "$IP
 
@@ -32,23 +32,13 @@ if [ -n "$DBNAME" ] && [ -n "$DBUSER" ] && [ -n "$DBPASSWD" ] ;then
   >> $LOG_FILE 2>&1
 fi
 
-echo "=> [3]: Configuration de BDD"
-if [ -f "$DBFILE" ] ;then
-  mysql < /vagrant/$DBFILE \
-  >> $LOG_FILE 2>&1
-fi
+#echo "=> [3]: Configuration de BDD"
+#if [ -f "$DBFILE" ] ;then
+ # mysql < /vagrant/$DBFILE \
+ # >> $LOG_FILE 2>&1
+#fi
 
 #Accès à la BBD  depuis n'importe ou
-
-#sudo apt-get install debconf-utils -y
-
-  #echo 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2' | sudo debconf-set-selections
-  #echo 'phpmyadmin phpmyadmin/dbconfig-install boolean true' | sudo debconf-set-selections
-  #echo 'phpmyadmin phpmyadmin/mysql/admin-pass password network' | sudo debconf-set-selections
-  #echo 'phpmyadmin phpmyadmin/mysql/app-pass password network' | sudo debconf-set-selections
-  #echo 'phpmyadmin phpmyadmin/app-password-confirm password network' | sudo debconf-set-selections
-
-  #sudo apt-get install phpmyadmin -y
 
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
 #Activation du port 3306 de la BDD
