@@ -19,22 +19,8 @@ sudo a2enmod ssl
 # Générer la paire de clés SSH
 #sudo ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N ""
 
-#Copie de la clé privée vers le reperoitre authorized_eys
-cat /vagrant/Bastion_Keys/id_rsa | sudo sh -c 'cat >> /home/vagrant/.ssh/authorized_keys'
+#Copie de la clé privée vers le reperoitre .ssh du reverseroxy
+sudo cp -v /vagrant/Bastion_Keys/id_rsa /home/vagrant/.ssh/
 
-#sudo cp -v id_rsa /vagrant/Bastion_Keys/
-#sudo cp -v id_rsa.pub /vagrant/Bastion_Keys/
-
-# Copie de la clé publique sur chaque VM dans le fichier authorized_keys
-#sudo  scp $SSH_OPTIONS /home/vagrant/.ssh/id_rsa.pub $USERNAME@$VM1_ADDRESS:/home/$USERNAMEVM/.ssh/authorized_keys
-
-#sshpass -p "$PASSWORD" ssh-copy-id -i /home/vagrant/.ssh/id_rsa.pub dev@$VM1_ADDRESS
-
-#sudo apt-get update
- 
-# Copie de la clé publique sur chaque VM dans le fichier authorized_keys
-#sudo scp $SSH_OPTIONS /home/vagrant/.ssh/id_rsa.pub $USERNAME@$VM2_ADDRESS:/home/$USERNAMEVM/.ssh/authorized_keys
-
-#sshpass -p "$PASSWORD" ssh-copy-id -i /home/vagrant/.ssh/id_rsa.pub dev@$VM2_ADDRESS
 
 echo "END - Distribution cle dans les autres VMS pour Bastion:)"
